@@ -8,10 +8,6 @@ export const useAuth = () => {
         retry: false,
         refetchOnWindowFocus: false
     })
-    
-    return {
-        data,
-        isError,
-        isLoading
-    }
+
+    return { data, isError, isLoading }
 }
