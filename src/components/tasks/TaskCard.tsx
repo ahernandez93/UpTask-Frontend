@@ -8,10 +8,11 @@ import { deleteTask } from "@/api/TaskAPI"
 import { toast } from "react-toastify"
 
 type TaskCardProps = {
-    task: Task
+    task: Task,
+    canEdit: boolean
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task, canEdit }: TaskCardProps) {
     const navigate = useNavigate()
     const params = useParams()
     const projectId = params.projectId!
@@ -33,7 +34,8 @@ export default function TaskCard({ task }: TaskCardProps) {
             <div className="min-w-0 flex flex-col gap-y-4">
                 <button
                     type="button"
-                    className="text-xl font-bold text-slate-600 text-left"
+                    className="text-xl font-bold text-slate-600 text-left cursor-pointer"
+                    onClick={() => navigate(location.pathname + `?viewTask=${task._id}`)}
                 >{task.name}</button>
                 <p className="text-slate-500">{task.description}</p>
             </div>
@@ -50,33 +52,36 @@ export default function TaskCard({ task }: TaskCardProps) {
                         <MenuItems
                             className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                             <MenuItem>
-                                <button 
-                                    type='button' 
+                                <button
+                                    type='button'
                                     className='block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer'
                                     onClick={() => navigate(location.pathname + `?viewTask=${task._id}`)}
                                 >
                                     Ver Tarea
                                 </button>
                             </MenuItem>
-                            <MenuItem>
-                                <button
-                                    type='button'
-                                    className='block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer'
-                                    onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
-                                >
-                                    Editar Tarea
-                                </button>
-                            </MenuItem>
-
-                            <MenuItem>
-                                <button
-                                    type='button'
-                                    className='block px-3 py-1 text-sm leading-6 text-red-500 cursor-pointer'
-                                    onClick={() => mutate({ projectId, taskId: task._id })}
-                                >
-                                    Eliminar Tarea
-                                </button>
-                            </MenuItem>
+                            {canEdit && (
+                                <>
+                                    <MenuItem>
+                                        <button
+                                            type='button'
+                                            className='block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer'
+                                            onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
+                                        >
+                                            Editar Tarea
+                                        </button>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <button
+                                            type='button'
+                                            className='block px-3 py-1 text-sm leading-6 text-red-500 cursor-pointer'
+                                            onClick={() => mutate({ projectId, taskId: task._id })}
+                                        >
+                                            Eliminar Tarea
+                                        </button>
+                                    </MenuItem>
+                                </>
+                            )}
                         </MenuItems>
                     </Transition>
                 </Menu>
