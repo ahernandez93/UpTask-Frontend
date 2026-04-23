@@ -58,9 +58,7 @@ export const taskSchema = z.object({
         _id: z.string(),
         user: userSchema,
         status: taskStatusSchema
-    })
-
-    ),
+    })),
     notes: z.array(noteSchema.extend({
         createdBy: userSchema
     })),

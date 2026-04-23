@@ -19,7 +19,6 @@
       "@/locales/*": ["locales/*"],
       "@/hooks/*": ["hooks/*"]
     },
-    "ignoreDeprecations": "6.0",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
